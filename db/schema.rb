@@ -39,9 +39,9 @@ ActiveRecord::Schema.define(version: 20200922164204) do
     t.string "employee_number"
     t.string "card_id"
     t.string "password_digest"
-    t.datetime "basic_time"
-    t.datetime "work_time_start"
-    t.datetime "work_time_finish"
+    t.datetime "basic_time", default: "2020-09-23 08:00:00"
+    t.datetime "work_time_start", default: "2020-09-23 09:00:00"
+    t.datetime "work_time_finish", default: "2020-09-23 18:00:00"
     t.string "authority"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
