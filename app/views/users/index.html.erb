@@ -1,0 +1,75 @@
+<% provide(:title, 'ユーザ一覧') %>
+
+<h1 class="headline">ユーザ一覧</h1>
+
+<div class="row">
+  <div class="col-md-3 form-group">
+    <label for="file1"></label>
+    <input type="file" id="file1" class="form-control-file file-selection">
+    <%= link_to "CSVをインポート", '#', class: "btn btn-primary btn-block btn-csv-import" %>
+  </div>
+</div>
+
+<div calss="row">
+  <div class="col-md-10 accordion-index-block">
+  <div>Example</div>
+    <% @users.each do |user| %>
+      <% serial = $alphabet[user.id.to_i - 1] %>
+      <%= user.name %>
+      <br>
+      <a class="delete-button-left"></a>
+      <%= link_to "削除", '#', class: "btn btn-primary btn-user-delete" %>
+    
+      <div class="accordion accordion-block">
+        <div class="card">
+          <div class="card-header accordion-head--color">
+            <button class="btn btn-primary btn-user-edit" type="button"
+              data-toggle="collapse" data-target="#card-4<%= serial %>"
+              aria-expanded="true" aria-controls="card-4<%= serial %>">
+              編集
+            </button>
+          </div>
+          <div id="card-4<%= serial %>" class="collapse"
+              aria-labelledby="header-4<%= serial %>" data-parent="#accordion-4">
+            <div class="card-body accordion-body">
+              <%= form_with(model: user, local: true) do |f| %>
+              
+                <%= f.label :name, class: "label-user-edit" %>
+                <%= f.text_field :name, class: "form-control" %>
+              
+                <%= f.label :email, class: "label-user-edit" %>
+                <%= f.email_field :email, class: "form-control" %>
+              
+                <%= f.label :department, class: "label-user-edit" %>
+                <%= f.text_field :department, class: "form-control" %>
+              
+                <%= f.label :employee_number, class: "label-user-edit" %>
+                <%= f.text_field :employee_number, class: "form-control" %>
+              
+                <%= f.label :card_id, class: "label-user-edit" %>
+                <%= f.text_field :card_id, class: "form-control" %>
+              
+                <%= f.label :password, class: "label-user-edit" %>
+                <%= f.password_field :password, class: "form-control" %>
+              
+                <%= f.label :password_confirmation, class: "label-user-edit" %>
+                <%= f.password_field :password_confirmation, class: "form-control" %>
+              
+                <%= f.label :basic_time, class: "label-user-edit" %>
+                <%= f.time_field :basic_time, class: "form-control" %>
+              
+                <%= f.label :work_time_start, class: "label-user-edit" %>
+                <%= f.time_field :work_time_start, class: "form-control" %>
+              
+                <%= f.label :work_time_finish, class: "label-user-edit" %>
+                <%= f.time_field :work_time_finish, class: "form-control" %>
+              
+                <%= f.submit "編集する", class: "btn btn-primary btn-block btn-user-update" %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

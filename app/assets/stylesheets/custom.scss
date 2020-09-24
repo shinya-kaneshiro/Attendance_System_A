@@ -81,12 +81,69 @@
   margin-bottom: -1px;
 }
 
-.btn-attendance-edit {
-  margin-bottom: 20px;
+// .btn-attendance-log {
+//   margin-bottom: 20px;
+// }
+
+.btn-attendance-application {
+  margin-top: 15px;
 }
 
 .table-foot {
   background-color: #f9f9f9;
+}
+
+/* ユーザ一覧 */
+.file-selection {
+  border: 1px solid silver;
+  // outline: 10px solid gray;
+  // outline-offset: -10px;
+}
+
+.btn-csv-import {
+  margin-top: 15px;
+}
+
+.accordion-index-block{
+  margin-left:23px;
+}
+
+.delete-button-left{
+  border-left: 1px solid;
+  margin-right: 5px;
+}
+
+.accordion-block{
+  margin-bottom: 15px;
+}
+
+.accordion-head--color {
+  background-color: #eaeaea;
+}
+
+.accordion-body {
+  border: 1px solid #eaeaea;
+  padding: 10px;
+}
+
+.btn-user-delete{
+  margin-top: 2px;
+}
+
+.btn-user-edit {
+  margin: 10px;
+  font-size: 14px;
+  height: 60px;
+  width: 100px;
+}
+
+.btn-user-update {
+  margin: 15px 0;
+}
+
+.label-user-edit {
+  margin-top: 5px;
+  margin-bottom: 1px;
 }
 
 /* デバッグウインドウ */

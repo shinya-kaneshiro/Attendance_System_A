@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   
   $days_of_the_week = %w{日 月 火 水 木 金 土}
+  $alphabet = [*'a'..'z']
 
   # paramsハッシュからユーザーを取得する。
   def set_user
