@@ -122,13 +122,15 @@
     <td class="table-data"><%= format("%.2f", @total_working_times.to_f) %></td>
     <td colspan="5"></td>
     <td colspan="1">
-      <div class="form-group">
-        <label for="select1a">所属長承認</label>
-        <select id="select1a" class="form-control">
-          <option>表示させる名前A</option>
-          <option>表示させる名前B</option>
-        </select>
-        <%= link_to "申請", '#', class: "btn btn-primary btn-block btn-attendance-application" %>
+      <div>
+      所属長承認&emsp;<%= @confirmation%>
+      <%= form_with(model: @user, url: attendance_confirmation_index_path, local: true, method: :post) do |f| %>
+        <%= f.hidden_field(:applicant, value: @user.id) %>
+        <%= f.hidden_field(:application_month, value: @first_day) %>
+        <%= f.collection_select(:manager, @managers, :id, :name, {:include_blank => true}, class: "select-attendance-confirmation")%>
+        <%= f.hidden_field(:status, value: "申請中") %>
+        <%= f.submit "申請", class: "btn btn-primary btn-block btn-attendance-confirmation" %>
+      <% end %>
       </div>
     </td>
   </tfoot>

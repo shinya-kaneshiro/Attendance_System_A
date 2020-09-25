@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
+  include SessionsHelper
   
   $days_of_the_week = %w{日 月 火 水 木 金 土}
   $alphabet = [*'a'..'z']
@@ -29,4 +30,18 @@ class ApplicationController < ActionController::Base
     flash[:danger] = "ページ情報の取得に失敗しました、再アクセスしてください。"
     redirect_to root_url
   end
+
+  # ページ出力前に該当月の申請中レコードの有無を確認する。
+  def attendance_confirmation_status_check
+    confirmation = AttendanceConfirmation.where(
+                                                applicant: params[:id],
+                                                status: "申請中",
+                                                application_month: @first_day)
+    if confirmation.count == 1
+      @confirmation = "#{User.find(confirmation[0].manager).name}へ申請中"
+    else
+      @confirmation = "未"
+    end
+  end
+
 end
