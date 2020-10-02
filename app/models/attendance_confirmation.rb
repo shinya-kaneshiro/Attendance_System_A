@@ -1,4 +1,4 @@
 class AttendanceConfirmation < ApplicationRecord
   
-  validates :manager, presence: true
+  validates :superior_id, presence: true
 end

@@ -3,10 +3,11 @@
 <h1 class="headline">ユーザ一覧</h1>
 
 <div class="row">
-  <div class="col-md-3 form-group">
-    <label for="file1"></label>
-    <input type="file" id="file1" class="form-control-file file-selection">
-    <%= link_to "CSVをインポート", '#', class: "btn btn-primary btn-block btn-csv-import" %>
+  <div class="col-md-3">
+    <%= form_tag import_users_path, multipart: true do %>
+      <%= file_field_tag :file, class: "file-selection" %>
+      <%= submit_tag "CSVをインポート", class: "btn btn-primary btn-block btn-csv-import" %>
+    <% end %>
   </div>
 </div>
 
@@ -40,14 +41,14 @@
                 <%= f.label :email, class: "label-user-edit" %>
                 <%= f.email_field :email, class: "form-control" %>
               
-                <%= f.label :department, class: "label-user-edit" %>
-                <%= f.text_field :department, class: "form-control" %>
+                <%= f.label :affiliation, class: "label-user-edit" %>
+                <%= f.text_field :affiliation, class: "form-control" %>
               
                 <%= f.label :employee_number, class: "label-user-edit" %>
                 <%= f.text_field :employee_number, class: "form-control" %>
               
-                <%= f.label :card_id, class: "label-user-edit" %>
-                <%= f.text_field :card_id, class: "form-control" %>
+                <%= f.label :uid, class: "label-user-edit" %>
+                <%= f.text_field :uid, class: "form-control" %>
               
                 <%= f.label :password, class: "label-user-edit" %>
                 <%= f.password_field :password, class: "form-control" %>
@@ -55,14 +56,14 @@
                 <%= f.label :password_confirmation, class: "label-user-edit" %>
                 <%= f.password_field :password_confirmation, class: "form-control" %>
               
-                <%= f.label :basic_time, class: "label-user-edit" %>
-                <%= f.time_field :basic_time, class: "form-control" %>
+                <%= f.label :basic_work_time, class: "label-user-edit" %>
+                <%= f.time_field :basic_work_time, class: "form-control" %>
               
-                <%= f.label :work_time_start, class: "label-user-edit" %>
-                <%= f.time_field :work_time_start, class: "form-control" %>
+                <%= f.label :designated_work_start_time, class: "label-user-edit" %>
+                <%= f.time_field :designated_work_start_time, class: "form-control" %>
               
-                <%= f.label :work_time_finish, class: "label-user-edit" %>
-                <%= f.time_field :work_time_finish, class: "form-control" %>
+                <%= f.label :designated_work_end_time, class: "label-user-edit" %>
+                <%= f.time_field :designated_work_end_time, class: "form-control" %>
               
                 <%= f.submit "編集する", class: "btn btn-primary btn-block btn-user-update" %>
               <% end %>

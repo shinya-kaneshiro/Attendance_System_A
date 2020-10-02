@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  applicant: MyString
+  application_worked_on: 2020-10-01
+  attendance_id: 1
+  started_at: 2020-10-01 23:25:03
+  finished_at: 2020-10-01 23:25:03
+  started_at_change: 2020-10-01 23:25:03
+  finished_at_change: 2020-10-01 23:25:03
+  next_day_flag: false
+  change_reason: MyString
+  status: MyString
+  superior_id: MyString
+
+two:
+  applicant: MyString
+  application_worked_on: 2020-10-01
+  attendance_id: 1
+  started_at: 2020-10-01 23:25:03
+  finished_at: 2020-10-01 23:25:03
+  started_at_change: 2020-10-01 23:25:03
+  finished_at_change: 2020-10-01 23:25:03
+  next_day_flag: false
+  change_reason: MyString
+  status: MyString
+  superior_id: MyString

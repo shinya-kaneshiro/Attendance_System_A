@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <% if logged_in? %>
-        <% if current_user.authority != "admin" %>
+        <% unless current_user.admin? %>
           <% provide(:logo, user_path(current_user)) %>
         <% else %>
           <% provide(:logo, users_path) %>

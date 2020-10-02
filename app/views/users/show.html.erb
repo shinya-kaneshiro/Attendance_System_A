@@ -5,21 +5,21 @@
     <tr>
       <th class="col-md-4 table-head">
         <div>
-        <%= link_to "◀", user_path(date: @first_day.prev_month), class: "btn btn-primary" %>
+        <%= link_to "◀", user_path(date: @first_day.prev_month), class: "btn btn-primary" if hide %>
         &nbsp;
         <%= l(@first_day, format: :middle) %>
         &nbsp;
         時間管理表
         &nbsp;
-        <%= link_to "▶", user_path(date: @first_day.next_month), class: "btn btn-primary" %>
+        <%= link_to "▶", user_path(date: @first_day.next_month), class: "btn btn-primary" if hide %>
         </div>
       </th>
       <th class="col-md-2 table-head">
-        指定勤務開始時間&emsp;<%= format_basic_info(@user.work_time_start) %>
+        指定勤務開始時間&emsp;<%= format_basic_info(@user.designated_work_start_time) %>
         <br>
-        &nbsp;&nbsp;指定勤務終了時間&emsp;<%= format_basic_info(@user.work_time_finish) %>
+        &nbsp;&nbsp;指定勤務終了時間&emsp;<%= format_basic_info(@user.designated_work_end_time) %>
       </th>
-      <th class="col-md-4 table-head"><%= format_basic_info(@user.basic_time) %>&emsp;基本時間</th>
+      <th class="col-md-4 table-head"><%= format_basic_info(@user.basic_work_time) %>&emsp;基本時間</th>
       <th class="col-md-2 table-head">初日&emsp;<%= l(@first_day, format: :short_zero) %></th>
     </tr>
   </div>
@@ -28,7 +28,7 @@
 <table class="table table-bordered table-condensed center">
   <div class="row">
     <tr>
-      <th class="col-md-4 table-head">所属&emsp;<%= @user.department.present? ? @user.department : "未所属" %></th>
+      <th class="col-md-4 table-head">所属&emsp;<%= @user.affiliation.present? ? @user.affiliation : "未所属" %></th>
       <th class="col-md-2 table-head">氏名&emsp;<%= @user.name %></th>
       <th class="col-md-1 table-head">コード</th>
       <th class="col-md-1 table-head"><%= @user.employee_number %></th>
@@ -38,12 +38,29 @@
   </div>
 </table>
 
-<%= 
-  link_to "勤怠を編集", '#', class: "btn btn-primary"
-%>
-<%= link_to "CSV出力", '#', class: "btn btn-primary" %>
-<br>
-<%= link_to "勤怠修正ログ（承認済）", '#', class: "btn btn-primary btn-attendance-log" %>
+<% if hide %>
+  <div>
+    <% if notification_confirmation %>
+      <% provide(:presence_color, "-presence") %>
+    <% end %>
+    <%= link_to "【所属長承認申請のお知らせ】", attendance_confirmation_confirmation_user_path(@user), remote: true, class: "link-notification#{yield(:presence_color)}" %>
+    <% if display_confirmation = notification_confirmation %>
+      <span><%= display_confirmation %></span>
+    <% end %>
+    <br>
+    <%= link_to "【勤怠変更申請のお知らせ】", '#' %>
+    <br>
+    <%= link_to "【残業申請のお知らせ】", '#' %>
+  </div>
+
+  <%= 
+    link_to "勤怠を編集", attendances_edit_one_month_user_path(date: @first_day), class: "btn btn-primary"
+  %>
+  <%= link_to "CSV出力", '#', class: "btn btn-primary" %>
+  <br>
+  <%= link_to "勤怠修正ログ（承認済）", '#', class: "btn btn-primary btn-attendance-log" %>
+  
+<% end %>
 
 <table class="table table-bordered table-condensed center table-striped">
   <thead>
@@ -79,7 +96,7 @@
   <tbody>
     <% @attendances.each do |day| %>
     <tr>
-      <td class="table-data"><%= link_to "残業申請", '#', class: "btn btn-primary"%></td>
+      <td class="table-data"><%= link_to "残業申請", '#', class: "btn btn-primary" if hide %></td>
       <td class="table-data"><%= l(day.worked_on, format: :short) %></td>
       <td class='table-data <%= "wday#{day.worked_on.wday}" %>'>
         <%= $days_of_the_week[day.worked_on.wday] %>
@@ -91,7 +108,7 @@
       <td class="table-data">
       <% if btn_text = attendance_state(day) %>
         <%=
-          link_to "#{btn_text}", '#', class: "btn btn-primary btn-attendance"
+          link_to "#{btn_text}", '#', class: "btn btn-primary btn-attendance" if hide
         %>
       <% end %>
       </td>
@@ -123,15 +140,20 @@
     <td colspan="5"></td>
     <td colspan="1">
       <div>
-      所属長承認&emsp;<%= @confirmation%>
-      <%= form_with(model: @user, url: attendance_confirmation_index_path, local: true, method: :post) do |f| %>
-        <%= f.hidden_field(:applicant, value: @user.id) %>
-        <%= f.hidden_field(:application_month, value: @first_day) %>
-        <%= f.collection_select(:manager, @managers, :id, :name, {:include_blank => true}, class: "select-attendance-confirmation")%>
-        <%= f.hidden_field(:status, value: "申請中") %>
-        <%= f.submit "申請", class: "btn btn-primary btn-block btn-attendance-confirmation" %>
+      所属長承認&emsp;<%= attendance_confirmation_status_check %>
+      <% if hide %>
+        <%= form_with(model: @user, url: attendance_confirmation_create_user_path, local: true, method: :post) do |f| %>
+          <%= f.hidden_field(:applicant, value: @user.id) %>
+          <%= f.hidden_field(:application_month, value: @first_day) %>
+          <%= f.collection_select(:superior_id, @superiors, :id, :name, {:include_blank => true}, class: "select-attendance-confirmation") %>
+          <%= f.hidden_field(:status, value: "申請中") %>
+          <%= f.submit "申請", class: "btn btn-primary btn-block btn-attendance-confirmation" %>
+        <% end %>
       <% end %>
       </div>
     </td>
   </tfoot>
 </table>
+
+<!--モーダルウインドウ表示-->
+<div id="confirmation" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

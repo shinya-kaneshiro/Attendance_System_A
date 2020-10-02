@@ -4,7 +4,8 @@ class CreateAttendanceConfirmations < ActiveRecord::Migration[5.1]
       t.string :applicant
       t.date :application_month
       t.string :status
-      t.string :manager
+      t.string :superior_id
+      t.boolean :check_box
 
       t.timestamps
     end

@@ -97,15 +97,19 @@
   width: 100%;
 }
 
+.link-notification-presence {
+  color: red;
+}
+
 /* ユーザ一覧 */
 .file-selection {
   border: 1px solid silver;
-  // outline: 10px solid gray;
-  // outline-offset: -10px;
+  width: 100%;
 }
 
 .btn-csv-import {
-  margin-top: 15px;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 .accordion-index-block{

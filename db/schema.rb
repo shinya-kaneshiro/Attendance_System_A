@@ -10,13 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200924221437) do
+ActiveRecord::Schema.define(version: 20201001232503) do
+
+  create_table "application_statuses", force: :cascade do |t|
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "attendance_changes", force: :cascade do |t|
+    t.string "applicant"
+    t.date "worked_on"
+    t.integer "attendance_id"
+    t.datetime "started_at"
+    t.datetime "finished_at"
+    t.datetime "started_at_change"
+    t.datetime "finished_at_change"
+    t.boolean "next_day_flag"
+    t.string "note"
+    t.string "status"
+    t.string "superior_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "attendance_confirmations", force: :cascade do |t|
     t.string "applicant"
     t.date "application_month"
     t.string "status"
-    t.string "manager"
+    t.string "superior_id"
+    t.boolean "check_box"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -27,6 +50,8 @@ ActiveRecord::Schema.define(version: 20200924221437) do
     t.datetime "finished_at"
     t.string "note"
     t.string "change_reason"
+    t.boolean "next_day_flag"
+    t.string "superior_id"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -44,18 +69,18 @@ ActiveRecord::Schema.define(version: 20200924221437) do
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
-    t.string "department"
+    t.string "affiliation"
     t.string "employee_number"
-    t.string "card_id"
+    t.string "uid"
+    t.datetime "basic_work_time", default: "2020-10-02 08:00:00"
+    t.datetime "designated_work_start_time", default: "2020-10-02 09:00:00"
+    t.datetime "designated_work_end_time", default: "2020-10-02 18:00:00"
+    t.boolean "superior"
+    t.boolean "admin"
     t.string "password_digest"
-    t.datetime "basic_time", default: "2020-09-25 08:00:00"
-    t.datetime "work_time_start", default: "2020-09-25 09:00:00"
-    t.datetime "work_time_finish", default: "2020-09-25 18:00:00"
-    t.string "authority"
+    t.string "remember_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "remember_digest"
-    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
 end

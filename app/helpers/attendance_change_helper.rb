@@ -1,0 +1,2 @@
+module AttendanceChangeHelper
+end

@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
       log_in user
       params[:session][:remember_me] == '1' ? remember(user) : forget(user)
       flash[:success] = "ログインしました。"
-      if user.authority == "admin"
+      if user.admin?
         redirect_to users_path
       else
         redirect_to user_path user
