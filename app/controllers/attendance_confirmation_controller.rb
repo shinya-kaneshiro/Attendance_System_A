@@ -1,7 +1,5 @@
 class AttendanceConfirmationController < ApplicationController
   before_action :set_user, only: [:create, :confirmation_update]
-  
-  $status_select = ApplicationStatus.all
 
   def create
     attendance_confirmation = AttendanceConfirmation.new(attendance_confirmation_params)
@@ -20,6 +18,7 @@ class AttendanceConfirmationController < ApplicationController
   end
   
   def confirmation_update
+    number_of_updates = 0
     ActiveRecord::Base.transaction do
       confirmation_only_params.each do |id, item|
         if item[:check_box] == "1"
@@ -27,11 +26,16 @@ class AttendanceConfirmationController < ApplicationController
           confirmation.update_attributes!(item)
           confirmation.check_box = false
           confirmation.save!
+          number_of_updates += 1
         end
       end
+      if number_of_updates >= 1
+        flash[:success] = "対象レコードの申請ステータスを変更しました。"
+      elsif number_of_updates == 0
+        flash[:danger] = "変更対象のレコードにチェックを入れてください。"
+      end
+      redirect_to user_path
     end
-    flash[:success] = "対象レコードの申請ステータスを変更しました。"
-    redirect_to user_path
   rescue ActiveRecord::RecordInvalid
     flash[:danger] = "変更処理に失敗しました。改めて実施してください。"
     redirect_to user_path

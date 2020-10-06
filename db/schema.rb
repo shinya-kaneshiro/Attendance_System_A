@@ -24,12 +24,13 @@ ActiveRecord::Schema.define(version: 20201001232503) do
     t.integer "attendance_id"
     t.datetime "started_at"
     t.datetime "finished_at"
-    t.datetime "started_at_change"
-    t.datetime "finished_at_change"
+    t.datetime "change_started_at"
+    t.datetime "change_finished_at"
     t.boolean "next_day_flag"
     t.string "note"
     t.string "status"
     t.string "superior_id"
+    t.boolean "check_box"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -72,9 +73,9 @@ ActiveRecord::Schema.define(version: 20201001232503) do
     t.string "affiliation"
     t.string "employee_number"
     t.string "uid"
-    t.datetime "basic_work_time", default: "2020-10-02 08:00:00"
-    t.datetime "designated_work_start_time", default: "2020-10-02 09:00:00"
-    t.datetime "designated_work_end_time", default: "2020-10-02 18:00:00"
+    t.datetime "basic_work_time", default: "2020-10-05 08:00:00"
+    t.datetime "designated_work_start_time", default: "2020-10-05 09:00:00"
+    t.datetime "designated_work_end_time", default: "2020-10-05 18:00:00"
     t.boolean "superior"
     t.boolean "admin"
     t.string "password_digest"

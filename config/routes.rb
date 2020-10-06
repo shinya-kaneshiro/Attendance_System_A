@@ -18,7 +18,11 @@ Rails.application.routes.draw do
       # 勤怠変更申請
       get 'attendances/edit_one_month'
       post 'attendance_change/create'
-
+      get 'attendance_change/change'
+      patch 'attendance_change/change_update'
+      
+      # 勤怠ログ表示
+      get 'attendance_change/show'
     end
   end
 end

@@ -39,26 +39,32 @@
 </table>
 
 <% if hide %>
-  <div>
-    <% if notification_confirmation %>
-      <% provide(:presence_color, "-presence") %>
-    <% end %>
-    <%= link_to "【所属長承認申請のお知らせ】", attendance_confirmation_confirmation_user_path(@user), remote: true, class: "link-notification#{yield(:presence_color)}" %>
-    <% if display_confirmation = notification_confirmation %>
-      <span><%= display_confirmation %></span>
-    <% end %>
-    <br>
-    <%= link_to "【勤怠変更申請のお知らせ】", '#' %>
-    <br>
-    <%= link_to "【残業申請のお知らせ】", '#' %>
-  </div>
+  <% if current_user.superior? %>
+    <div>
+      <% provide(:confirmation, "-confirmation-presence") if notification_confirmation %>
+      <%=
+        link_to "【所属長承認申請のお知らせ】", attendance_confirmation_confirmation_user_path(@user),
+        remote: true, class: "link-notification#{yield(:confirmation)}"
+      %>
+      <%= notification_confirmation if notification_confirmation %>
+      <br>
+      <% provide(:change, "-change-presence") if notification_change %>
+      <%=
+      link_to "【勤怠変更申請のお知らせ】", attendance_change_change_user_path(@user),
+      remote: true, class: "link-notification#{yield(:change)}"
+      %>
+      <%= notification_change if notification_change %>
+      <br>
+      <%= link_to "【残業申請のお知らせ】", '#' %>
+    </div>
+  <% end %>
 
   <%= 
     link_to "勤怠を編集", attendances_edit_one_month_user_path(date: @first_day), class: "btn btn-primary"
   %>
   <%= link_to "CSV出力", '#', class: "btn btn-primary" %>
   <br>
-  <%= link_to "勤怠修正ログ（承認済）", '#', class: "btn btn-primary btn-attendance-log" %>
+  <%= link_to "勤怠修正ログ（承認済）", attendance_change_show_user_path(@user, date: @first_day), class: "btn btn-primary btn-attendance-log" %>
   
 <% end %>
 
@@ -128,7 +134,7 @@
       <td class="table-data"></td>
       <td class="table-data"></td>
       <td class="table-data"></td>
-      <td class="table-data"></td>
+      <td class="table-data"><%= change_status_display(day) %></td>
     </tr>
     <% end %>
   </tbody>
@@ -157,3 +163,4 @@
 
 <!--モーダルウインドウ表示-->
 <div id="confirmation" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="change" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

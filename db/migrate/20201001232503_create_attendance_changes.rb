@@ -6,12 +6,13 @@ class CreateAttendanceChanges < ActiveRecord::Migration[5.1]
       t.integer :attendance_id
       t.datetime :started_at
       t.datetime :finished_at
-      t.datetime :started_at_change
-      t.datetime :finished_at_change
+      t.datetime :change_started_at
+      t.datetime :change_finished_at
       t.boolean :next_day_flag
       t.string :note
       t.string :status
       t.string :superior_id
+      t.boolean :check_box
 
       t.timestamps
     end

@@ -77,6 +77,181 @@ AttendanceConfirmation.create!(applicant: "2",
                                status: "申請中",
                                superior_id: "3")
 
+# 勤怠データサンプル
+ 31.times do |n|
+   worked_on = "2020-10-#{n+1}"
+   Attendance.create!(worked_on: worked_on,
+                      user_id: 1)
+end
+
+ 31.times do |n|
+   worked_on = "2020-10-#{n+1}"
+   Attendance.create!(worked_on: worked_on,
+                      user_id: 2)
+end
+
+ 30.times do |n|
+   worked_on = "2020-09-#{n+1}"
+   Attendance.create!(worked_on: worked_on,
+                      user_id: 1)
+end
+
+# 勤怠変更申請
+AttendanceChange.create!(
+                        applicant: "1",
+                        worked_on: "2020-10-01",
+                        attendance_id: "1",
+                        started_at: "2020-10-01 08:00:00",
+                        finished_at: "2020-10-01 17:00:00",
+                        change_started_at: "2020-10-01 07:00:00",
+                        change_finished_at: "2020-10-01 17:00:00",
+                        next_day_flag: false,
+                        note: "早出の為",
+                        status: "申請中",
+                        superior_id: "3",
+                        )
+
+AttendanceChange.create!(
+                        applicant: "1",
+                        worked_on: "2020-10-02",
+                        attendance_id: "2",
+                        started_at: "2020-10-02 08:00:00",
+                        finished_at: "2020-10-02 17:00:00",
+                        change_started_at: "2020-10-02 06:00:00",
+                        change_finished_at: "2020-10-02 17:00:00",
+                        next_day_flag: false,
+                        note: "早出の為",
+                        status: "申請中",
+                        superior_id: "3",
+                        )
+
+AttendanceChange.create!(
+                        applicant: "1",
+                        worked_on: "2020-10-03",
+                        attendance_id: "3",
+                        started_at: "2020-10-03 08:00:00",
+                        finished_at: "2020-10-03 17:00:00",
+                        change_started_at: "2020-10-03 08:00:00",
+                        change_finished_at: "2020-10-03 19:00:00",
+                        next_day_flag: false,
+                        note: "残業した為",
+                        status: "申請中",
+                        superior_id: "3",
+                        )
+
+AttendanceChange.create!(
+                        applicant: "2",
+                        worked_on: "2020-10-03",
+                        attendance_id: "34",
+                        started_at: "2020-10-03 08:00:00",
+                        finished_at: "2020-10-03 17:00:00",
+                        change_started_at: "2020-10-03 08:00:00",
+                        change_finished_at: "2020-10-03 20:00:00",
+                        next_day_flag: false,
+                        note: "残業した為（前回申請の訂正）",
+                        status: "申請中",
+                        superior_id: "3",
+                        )
+
+AttendanceChange.create!(
+                        applicant: "2",
+                        worked_on: "2020-10-04",
+                        attendance_id: "35",
+                        started_at: "2020-10-04 08:00:00",
+                        finished_at: "2020-10-04 17:00:00",
+                        change_started_at: "2020-10-04 08:00:00",
+                        change_finished_at: "2020-10-04 20:00:00",
+                        next_day_flag: false,
+                        note: "残業した為（前回申請の訂正）",
+                        status: "申請中",
+                        superior_id: "3",
+                        )
+
+# 勤怠変更申請（勤怠ログ用）
+AttendanceChange.create!(
+                        applicant: "1",
+                        worked_on: "2020-10-03",
+                        attendance_id: "3",
+                        started_at: "2020-10-03 08:00:00",
+                        finished_at: "2020-10-03 17:00:00",
+                        change_started_at: "2020-10-03 07:00:00",
+                        change_finished_at: "2020-10-03 17:00:00",
+                        next_day_flag: false,
+                        note: "早出の為",
+                        status: "承認",
+                        superior_id: "3",
+                        )
+
+AttendanceChange.create!(
+                        applicant: "1",
+                        worked_on: "2020-10-04",
+                        attendance_id: "4",
+                        started_at: "2020-10-04 08:00:00",
+                        finished_at: "2020-10-04 17:00:00",
+                        change_started_at: "2020-10-04 07:00:00",
+                        change_finished_at: "2020-10-04 17:00:00",
+                        next_day_flag: false,
+                        note: "早出の為",
+                        status: "承認",
+                        superior_id: "3",
+                        )
+
+AttendanceChange.create!(
+                        applicant: "1",
+                        worked_on: "2020-10-04",
+                        attendance_id: "4",
+                        started_at: "2020-10-04 08:00:00",
+                        finished_at: "2020-10-04 17:00:00",
+                        change_started_at: "2020-10-04 06:00:00",
+                        change_finished_at: "2020-10-04 17:00:00",
+                        next_day_flag: false,
+                        note: "早出の為",
+                        status: "承認",
+                        superior_id: "3",
+                        )
+
+AttendanceChange.create!(
+                        applicant: "1",
+                        worked_on: "2020-10-04",
+                        attendance_id: "4",
+                        started_at: "2020-10-04 08:00:00",
+                        finished_at: "2020-10-04 17:00:00",
+                        change_started_at: "2020-10-04 05:00:00",
+                        change_finished_at: "2020-10-04 17:00:00",
+                        next_day_flag: false,
+                        note: "早出の為",
+                        status: "承認",
+                        superior_id: "3",
+                        )
+
+AttendanceChange.create!(
+                        applicant: "1",
+                        worked_on: "2020-10-05",
+                        attendance_id: "5",
+                        started_at: "2020-10-05 08:00:00",
+                        finished_at: "2020-10-05 17:00:00",
+                        change_started_at: "2020-10-05 07:00:00",
+                        change_finished_at: "2020-10-05 17:00:00",
+                        next_day_flag: false,
+                        note: "早出の為",
+                        status: "承認",
+                        superior_id: "3",
+                        )
+
+AttendanceChange.create!(
+                        applicant: "1",
+                        worked_on: "2020-09-01",
+                        attendance_id: "63",
+                        started_at: "2020-09-01 08:00:00",
+                        finished_at: "2020-09-01 17:00:00",
+                        change_started_at: "2020-09-01 07:00:00",
+                        change_finished_at: "2020-09-01 17:00:00",
+                        next_day_flag: false,
+                        note: "早出の為",
+                        status: "承認",
+                        superior_id: "3",
+                        )
+
 # 100.times do |n|
 #   name  = Faker::Name.name
 #   email = "sample-#{n+1}@email.com"
