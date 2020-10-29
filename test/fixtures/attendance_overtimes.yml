@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  worked_on: 2020-10-07
+  scheduled_end_at: 2020-10-07 02:14:40
+  next_day_flag: false
+  business_content: MyString
+  superior_id: MyString
+
+two:
+  worked_on: 2020-10-07
+  scheduled_end_at: 2020-10-07 02:14:40
+  next_day_flag: false
+  business_content: MyString
+  superior_id: MyString

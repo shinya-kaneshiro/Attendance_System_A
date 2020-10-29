@@ -5,9 +5,13 @@ module AttendanceChangeHelper
     extraction_record = AttendanceChange.where(applicant: @user.id, worked_on: day.worked_on).order(created_at: :desc).limit(1)
     if extraction_record.present?
       extraction_record.each do |record|
-        return "勤怠編集 #{record.status}済" if record.status == "承認"
-        return "勤怠編集 #{record.status}" if record.status == "否認"
-        return "" if record.status == "申請中"
+        # return "勤怠変更申請中" if record.status == "申請中"
+        # return "勤怠変更承認済" if record.status == "承認"
+        # return "勤怠変更否認" if record.status == "否認"
+        superior = User.find(record.superior_id)
+        return "勤怠変更申請中(#{superior.name})" if record.status == "申請中"
+        return "勤怠変更承認済(#{superior.name})" if record.status == "承認"
+        return "勤怠変更否認(#{superior.name})" if record.status == "否認"
       end
     end
     # return "" unless extraction_record.present?
@@ -86,5 +90,14 @@ module AttendanceChangeHelper
       multiple_records.push(record.updated_at.to_date)
     end
     return multiple_records
+  end
+  
+  # 勤怠変更申請を承認した場合、申請者の勤怠情報を更新する。
+  def applicant_attendance_update(record)
+    target_record = Attendance.find(record.attendance_id)
+    target_record.started_at = record.change_started_at
+    target_record.finished_at = record.change_finished_at
+    target_record.next_day_flag = record.next_day_flag
+    target_record.save!
   end
 end

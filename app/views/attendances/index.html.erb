@@ -1,0 +1,22 @@
+<% provide(:title, "出勤中社員一覧") %>
+<h1 class="headline">出勤中社員一覧</h1>
+
+<div class="row">
+  <table class="table table-bordered table-condensed center">
+    <thead>
+      <tr>
+        <th class="col-md-6 table-head">社員番号</th>
+        <th class="col-md-6 table-head">名前</th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      <% @jobs_array.each do |job| %>
+        <tr>
+          <td><%= job.employee_number %></td>
+          <td><%= job.name %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

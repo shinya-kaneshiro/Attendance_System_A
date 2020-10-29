@@ -10,12 +10,27 @@ module AttendancesHelper
   end
   
   # 在社時間を計算して返す。15分単位ver
-  def working_times(start, finish)
+  def working_times(start, finish, next_day_flag)
     start_time = start.hour * 60 + fifteen_minutes_conversion(start.min)
-    finish_time = finish.hour * 60 + fifteen_minutes_conversion(finish.min)
+    if next_day_flag
+      finish_time = (finish.hour + 24) * 60 + fifteen_minutes_conversion(finish.min)
+    else
+      finish_time = finish.hour * 60 + fifteen_minutes_conversion(finish.min)
+    end
     format("%.2f", (finish_time - start_time) / 60.0)
   end
-  
+
+  # 時間外時間を計算して返す。15分単位ver
+  def working_times_over(start, finish, next_day_flag)
+    start_time = start.hour * 60 + fifteen_minutes_conversion(start.min)
+    if next_day_flag
+      finish_time = (finish.hour + 24) * 60 + fifteen_minutes_conversion(finish.min)
+    else
+      finish_time = finish.hour * 60 + fifteen_minutes_conversion(finish.min)
+    end
+    format("%.2f", ((finish_time - start_time) / 60.0) - 9)
+  end
+
   # 勤怠表示画面の時刻表示（分）を15分単位にする。
   def fifteen_minutes_conversion(time)
     if time <= 14

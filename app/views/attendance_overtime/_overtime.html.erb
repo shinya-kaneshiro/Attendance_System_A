@@ -1,0 +1,75 @@
+<div class="modal-dialog modal-lg modal-dialog-center">
+  <div class="modal-content">
+    <div class="modal-header modal-header-border">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <% if @overtimes.empty? %>
+      <div class="no-notification-messege center"><%= "現在、お知らせはありません。" %></div>
+    <% else %>
+      <%= 
+        form_with(model: @overtimes,
+                  url: attendance_overtime_overtime_update_user_path,
+                  local: true,
+                  method: :patch
+                  ) do |f|
+      %>
+        <% @users.each do |user| %>
+          <% single_user = @overtimes.where(applicant: user.id) %>
+          <% unless single_user.blank? %>
+            <h4 class="modal-title center"><%= "【#{user.name}からの残業申請】" %></h4>
+            <div class="modal-body modal-body-area">
+              <table class="table table-bordered table-condensed center table-striped">
+                <thead>
+                  <div class="row">
+                    <tr>
+                      <th class="table-head">日付</th>
+                      <th class="table-head">曜日</th>
+                      <th class="table-head">終了予定時間</th>
+                      <th class="table-head">指定勤務終了時間</th>
+                      <th class="table-head">時間外時間</th>
+                      <th class="table-head table-head-business-content">業務処理内容</th>
+                      <th class="table-head">指示者確認㊞</th>
+                      <th class="table-head">変更</th>
+                      <th class="table-head">勤怠を確認する</th>
+                    </tr>
+                  </div>
+                </thead>
+                <tbody>
+                  <% single_user.each do |single| %>
+                    <%= f.fields_for 'data[]', single do |fs| %>
+                    <tr>
+                      <%= fs.hidden_field(:id, value: single.id) %>
+                      <td class="table-data"><%= l(single.worked_on, format: :short) %></td>
+                      <td class='table-data <%= "wday#{single.worked_on.wday}" %>'>
+                        <%= $days_of_the_week[single.worked_on.wday] %>
+                      </td>
+                      <td class="table-data"><%= hhmm_convert(single.scheduled_end_at) %></td>
+                      <td class="table-data">
+                        <% designated_work_end_time = get_designated_work_end_time(
+                                                                                    single.applicant,
+                                                                                    single.attendance_id)
+                        %>
+                        <%= hhmm_convert(designated_work_end_time) %>
+                      </td>
+                      <td class="table-data"><%= overtime_hours(designated_work_end_time, single.scheduled_end_at) %></td>
+                      <td class="table-data"><%= single.business_content %></td>
+                      <td class="table-data"><%= fs.collection_select(:status, $status_select, :status, :status) %></td>
+                      <td class="table-data">
+                        <%= fs.check_box :check_box %>
+                      </td>
+                      <td class="table-data"><%= link_to "確認", user_path(single.applicant, date: single.worked_on.beginning_of_month, readonly_flag:"1"), class: "btn btn-primary btn-md", target: :_blank %></td>
+                    </tr>
+                    <% end %>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          <% end %>
+        <% end %>
+        <%= f.submit "変更を送信する", class: "btn btn-lg btn-primary center-block btn-modal-common" %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

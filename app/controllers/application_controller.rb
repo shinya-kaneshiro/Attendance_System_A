@@ -45,7 +45,60 @@ class ApplicationController < ActionController::Base
   
   # 上長選択のプルダウン用
   def set_superiors
-    @superiors = User.where(superior: true)
+    if current_user.superior?
+      superiors = User.where(superior: true)
+      @superiors = superiors.where.not(id: current_user.id)
+    else
+      @superiors = User.where(superior: true)
+    end
   end
   
+  # ログイン済みのユーザーか確認し、未ログインならログインページへ遷移させる。
+  def logged_in_user
+    unless logged_in?
+      store_location
+      flash[:danger] = "ログインしてください。"
+      redirect_to login_url
+    end
+  end
+
+  # アクセスしたユーザーが現在ログインしているユーザーか確認する。
+  def correct_user
+    if params[:user_id].nil?
+      @user = User.find(params[:id])
+    else
+      @user = User.find(params[:user_id])
+    end
+    unless current_user?(@user)
+      flash[:danger] = "アクセス権限がありません。"
+      redirect_to(root_url)
+    end
+  end
+
+  # 上長ユーザ権限保有者、またはログインユーザー本人のみアクセスを許可する。
+  def superior_or_correct_user
+    if params[:user_id].nil?
+      @user = User.find(params[:id])
+    else
+      @user = User.find(params[:user_id])
+    end
+    unless current_user?(@user) || current_user.superior?
+      flash[:danger] = "アクセス権限がありません。"
+      redirect_to(root_url)
+    end
+    if current_user.superior? && params[:readonly_flag].nil?
+      unless @user == current_user
+        flash[:danger] = "申請者の勤怠表示画面はモーダルから読み取り専用でアクセスしてください）"
+        redirect_to user_url current_user
+      end
+    end
+  end
+
+  # 管理者権限を保有していない場合、アクセスを拒否する。
+  def admin_user
+    unless current_user.admin?
+      flash[:danger] = "アクセス権限がありません。"
+      redirect_to root_url
+    end
+  end
 end

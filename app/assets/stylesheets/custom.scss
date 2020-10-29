@@ -89,17 +89,58 @@
   margin-top: 15px;
 }
 
-.table-foot {
-  background-color: #f9f9f9;
-}
-
-.select-attendance-confirmation {
+.btn-attendance-confirmation {
   width: 100%;
 }
 
+// .table-foot {
+//   background-color: #f9f9f9;
+// }
+
+.select-attendance-confirmation {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
 .link-notification-confirmation-presence,
-.link-notification-change-presence {
+.link-notification-change-presence,
+.link-notification-overtime-presence {
   color: red;
+}
+
+/* 勤怠編集画面 */
+.btn-change-application {
+  margin-bottom: 20px;
+}
+
+/* 勤怠ログ画面 */
+.year-month-selection {
+  width: 15%;
+}
+
+/* モーダル共通 */
+.modal-header-border {
+  border: none;
+}
+
+.modal-body-area {
+  padding-top: 2px;
+  padding-bottom: 5px;
+  margin: 0 20px;
+}
+
+.btn-modal-common {
+  margin-bottom: 20px;
+}
+
+.no-notification-messege {
+  font-size: 20px;
+  margin-bottom: 49px;
+}
+
+/* モーダル、残業申請、承認者側 */
+.table-head-business-content {
+  width: 200px;
 }
 
 /* ユーザ一覧 */
@@ -153,6 +194,23 @@
 .label-user-edit {
   margin-top: 5px;
   margin-bottom: 1px;
+}
+
+/* 拠点情報 */
+.btn-base-edit {
+  margin-bottom: 20px;
+}
+
+.base-push-area {
+  background-color: #EEE;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+.base-select-box {
+  width: 80px;
+  margin-bottom: 10px;
 }
 
 /* デバッグウインドウ */

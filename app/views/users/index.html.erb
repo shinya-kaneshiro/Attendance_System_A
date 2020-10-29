@@ -19,7 +19,10 @@
       <%= user.name %>
       <br>
       <a class="delete-button-left"></a>
-      <%= link_to "削除", '#', class: "btn btn-primary btn-user-delete" %>
+      <%= 
+        link_to "削除", user_path(user), method: :delete, data: { confirm: "「#{user.name}」を削除してよろしいですか？" },
+        class: "btn btn-primary btn-user-delete"
+      %>
     
       <div class="accordion accordion-block">
         <div class="card">

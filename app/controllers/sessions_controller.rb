@@ -1,6 +1,11 @@
 class SessionsController < ApplicationController
   
   def new
+    if logged_in?
+      flash[:info] = "すでにログインしています。"
+      redirect_to user_path(current_user) unless current_user.admin?
+      redirect_to users_path(current_user) if current_user.admin?
+    end
   end
 
   def create

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201001232503) do
+ActiveRecord::Schema.define(version: 20201007021440) do
 
   create_table "application_statuses", force: :cascade do |t|
     t.string "status"
@@ -38,6 +38,20 @@ ActiveRecord::Schema.define(version: 20201001232503) do
   create_table "attendance_confirmations", force: :cascade do |t|
     t.string "applicant"
     t.date "application_month"
+    t.string "status"
+    t.string "superior_id"
+    t.boolean "check_box"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "attendance_overtimes", force: :cascade do |t|
+    t.string "applicant"
+    t.date "worked_on"
+    t.integer "attendance_id"
+    t.datetime "scheduled_end_at"
+    t.boolean "next_day_flag"
+    t.string "business_content"
     t.string "status"
     t.string "superior_id"
     t.boolean "check_box"
@@ -73,9 +87,9 @@ ActiveRecord::Schema.define(version: 20201001232503) do
     t.string "affiliation"
     t.string "employee_number"
     t.string "uid"
-    t.datetime "basic_work_time", default: "2020-10-05 08:00:00"
-    t.datetime "designated_work_start_time", default: "2020-10-05 09:00:00"
-    t.datetime "designated_work_end_time", default: "2020-10-05 18:00:00"
+    t.datetime "basic_work_time", default: "2020-10-22 23:00:00"
+    t.datetime "designated_work_start_time", default: "2020-10-23 00:00:00"
+    t.datetime "designated_work_end_time", default: "2020-10-23 09:00:00"
     t.boolean "superior"
     t.boolean "admin"
     t.string "password_digest"

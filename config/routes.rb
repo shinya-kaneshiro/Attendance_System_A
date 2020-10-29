@@ -14,7 +14,7 @@ Rails.application.routes.draw do
       post 'attendance_confirmation/create'
       get 'attendance_confirmation/confirmation'
       patch 'attendance_confirmation/confirmation_update'
-      
+
       # 勤怠変更申請
       get 'attendances/edit_one_month'
       post 'attendance_change/create'
@@ -23,6 +23,15 @@ Rails.application.routes.draw do
       
       # 勤怠ログ表示
       get 'attendance_change/show'
+      
+      # 残業申請
+      get 'attendance_overtime/new'
+      post 'attendance_overtime/create'
+      get 'attendance_overtime/overtime'
+      patch 'attendance_overtime/overtime_update'
     end
+    resources :attendances, only: [:update, :index]
+    resources :bases, only: [:index, :create, :edit, :update, :destroy]
+
   end
 end

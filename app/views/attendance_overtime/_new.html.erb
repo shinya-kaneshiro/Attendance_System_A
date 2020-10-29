@@ -1,0 +1,53 @@
+<div class="modal-dialog modal-lg modal-dialog-center">
+  <div class="modal-content">
+    <div class="modal-header modal-header-border">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <%= form_with(model: AttendanceOvertime,
+                  url: attendance_overtime_create_user_path,
+                  local: true,
+                  method: :post
+                  ) do |f|
+    %>
+      <h4 class="modal-title center"><%= "【残業申請】" %></h4>
+      <div class="modal-body modal-body-area">
+        <div class="row">
+          <table class="table table-bordered table-condensed center table-striped">
+            <thead>
+                <tr>
+                  <th class="col-md-1 table-head">日付</th>
+                  <th class="col-md-1 table-head">曜日</th>
+                  <th class="col-md-1 table-head">終了予定時間</th>
+                  <th class="col-md-1 table-head">翌日</th>
+                  <th class="col-md-1 table-head">業務処理内容</th>
+                  <th class="col-md-1 table-head">指示者確認㊞</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+              <tr>
+                <%= f.hidden_field(:applicant, value: @attendance.user_id) %>
+                <td class="table-data">
+                  <%= @attendance.worked_on %>
+                  <%= f.hidden_field(:worked_on, value: @attendance.worked_on) %>
+                </td>
+                <%= f.hidden_field(:attendance_id, value: @attendance.id) %>
+                <td class='table-data <%= "wday#{@attendance.worked_on.wday}" %>'>
+                  <%= $days_of_the_week[@attendance.worked_on.wday] %>
+                </td>
+                <td class="table-data"><%= f.time_select :scheduled_end_at, :include_blank => true, class: 'form-control' %></td>
+                <td class="table-data"><%= f.check_box :next_day_flag %></td>
+                <td class="table-data"><%= f.text_field :business_content %></td>
+                  <%= f.hidden_field(:status, value: "申請中") %>
+                <td class="table-data"><%= f.collection_select(:superior_id, @superiors, :id, :name, {:include_blank => true}) %></td>
+              </tr>
+            </tbody>
+          </table>
+          <%= f.submit "変更を送信する", class: "btn btn-primary btn-block" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

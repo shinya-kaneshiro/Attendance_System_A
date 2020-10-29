@@ -1,0 +1,45 @@
+<% provide(:title, "拠点情報") %>
+
+<h1 class="headline">拠点情報</h1>
+<div class="row">
+  <table class="table table-bordered table-condensed center table-striped">
+    <thead>
+      <tr>
+        <th class="col-md-3 table-head"></th>
+        <th class="col-md-3 table-head"></th>
+        <th class="col-md-2 table-head">拠点番号</th>
+        <th class="col-md-2 table-head">拠点名</th>
+        <th class="col-md-2 table-head">勤怠種類</th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      <% @bases.each do |base| %>
+        <tr>
+          <td>
+            <%= link_to "編集", edit_user_basis_path(current_user, base.id), remote: true,
+            class: "btn btn-primary btn-md" %>
+          </td>
+          <td>
+            <%= link_to "削除", user_basis_path(current_user, base.id),method: :delete,
+            data: { confirm: "「#{base.base_name}」を削除します。よろしいですか？" },
+            class: "btn btn-primary btn-md" %>
+          </td>
+          <td class="table-data"><%= base.base_number %></td>
+          <td class="table-data"><%= base.base_name %></td>
+          <td class="table-data"><%= base.attendance_type %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="row">
+  <div>
+    <div class="base-push-area">
+      <%= link_to "拠点情報追加", user_bases_path(current_user), method: :post, class: "btn btn-primary btn-lg" %>
+    </div>
+  </div>
+</div>
+
+<div id="edit" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

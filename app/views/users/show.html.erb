@@ -50,19 +50,24 @@
       <br>
       <% provide(:change, "-change-presence") if notification_change %>
       <%=
-      link_to "【勤怠変更申請のお知らせ】", attendance_change_change_user_path(@user),
-      remote: true, class: "link-notification#{yield(:change)}"
+        link_to "【勤怠変更申請のお知らせ】", attendance_change_change_user_path(@user),
+        remote: true, class: "link-notification#{yield(:change)}"
       %>
       <%= notification_change if notification_change %>
       <br>
-      <%= link_to "【残業申請のお知らせ】", '#' %>
+      <% provide(:overtime, "-overtime-presence") if notification_overtime %>
+      <%= 
+        link_to "【残業申請のお知らせ】", attendance_overtime_overtime_user_path(@user),
+        remote:true, class: "link-notification#{yield(:overtime)}"
+      %>
+      <%= notification_overtime if notification_overtime %>
     </div>
   <% end %>
 
   <%= 
     link_to "勤怠を編集", attendances_edit_one_month_user_path(date: @first_day), class: "btn btn-primary"
   %>
-  <%= link_to "CSV出力", '#', class: "btn btn-primary" %>
+  <%= link_to "CSV出力", user_path(format: :csv, date: @first_day), class: "btn btn-primary" %>
   <br>
   <%= link_to "勤怠修正ログ（承認済）", attendance_change_show_user_path(@user, date: @first_day), class: "btn btn-primary btn-attendance-log" %>
   
@@ -102,7 +107,12 @@
   <tbody>
     <% @attendances.each do |day| %>
     <tr>
-      <td class="table-data"><%= link_to "残業申請", '#', class: "btn btn-primary" if hide %></td>
+      <td class="table-data">
+        <% if hide %>
+          <%= link_to "残業申請", attendance_overtime_new_user_path(@user, attendance_id: day), remote: true,
+            class: "btn btn-primary" %>
+        <% end %>
+      </td>
       <td class="table-data"><%= l(day.worked_on, format: :short) %></td>
       <td class='table-data <%= "wday#{day.worked_on.wday}" %>'>
         <%= $days_of_the_week[day.worked_on.wday] %>
@@ -112,10 +122,13 @@
         <%= fifteen_minutes_conversion(day.started_at.min) if day.started_at.present? %>
       </td>
       <td class="table-data">
-      <% if btn_text = attendance_state(day) %>
-        <%=
-          link_to "#{btn_text}", '#', class: "btn btn-primary btn-attendance" if hide
-        %>
+      <% if hide %>
+        <% if btn_text = attendance_state(day) %>
+          <%=
+            link_to "#{btn_text}", user_attendance_path(@user, day),
+            method: :patch, class: "btn btn-primary btn-attendance"
+          %>
+        <% end %>
       <% end %>
       </td>
       <td class="table-data"><%= day.finished_at.hour if day.finished_at.present? %></td>
@@ -125,19 +138,33 @@
       <td></td>
       <td class="table-data">
       <% if day.started_at.present? && day.finished_at.present? %>
-        <%= str_times = working_times(day.started_at, day.finished_at) %>
+        <%= str_times = working_times(day.started_at, day.finished_at, day.next_day_flag) %>
         <% @total_working_times = @total_working_times.to_f + str_times.to_f %>
       <% end %>
       </td>
       <td class="table-data"><%= day.note %></td>
-      <td class="table-data"></td>
-      <td class="table-data"></td>
-      <td class="table-data"></td>
-      <td class="table-data"></td>
-      <td class="table-data"><%= change_status_display(day) %></td>
+      <td class="table-data"><%= sheduled_end_at_hour(day) %></td>
+      <td class="table-data"><%= sheduled_end_at_min(day) %></td>
+      <td class="table-data">
+        <% if day.started_at.present? && day.finished_at.present? %>
+          <% over_time = working_times_over(day.started_at, day.finished_at, day.next_day_flag) %>
+          <%= over_time if over_time.to_i >= 0.01 %>
+        <% end %>
+      </td>
+      <td class="table-data"><%= business_processing_content(day) %></td>
+      <td class="table-data">
+        <% first_line = overtime_status_display(day) %>
+        <% second_line = change_status_display(day) %>
+        <% if first_line && second_line %>
+          <%= first_line %><br><%= second_line %>
+        <% else %>
+          <%= first_line %><%= second_line %>
+        <% end %>
+      </td>
     </tr>
     <% end %>
   </tbody>
+  
   <tfoot class="table-foot">
     <td colspan="1"></td>
     <td colspan="2"></td>
@@ -153,7 +180,7 @@
           <%= f.hidden_field(:application_month, value: @first_day) %>
           <%= f.collection_select(:superior_id, @superiors, :id, :name, {:include_blank => true}, class: "select-attendance-confirmation") %>
           <%= f.hidden_field(:status, value: "申請中") %>
-          <%= f.submit "申請", class: "btn btn-primary btn-block btn-attendance-confirmation" %>
+          <%= f.submit "申請", class: "btn-attendance-confirmation btn btn-primary btn-lg" %>
         <% end %>
       <% end %>
       </div>
@@ -164,3 +191,5 @@
 <!--モーダルウインドウ表示-->
 <div id="confirmation" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <div id="change" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="new" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="overtime" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
