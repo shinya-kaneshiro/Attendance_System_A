@@ -100,4 +100,15 @@ module AttendanceChangeHelper
     target_record.next_day_flag = record.next_day_flag
     target_record.save!
   end
+  
+  # 勤怠変更申請が承認された場合、備考を返す。
+  def approved_remarks(record)
+    extraction_record = AttendanceChange.where(applicant: record.user_id, worked_on: record.worked_on).order(created_at: :desc).limit(1)
+    if extraction_record.present?
+      extraction_record.each do |record|
+        return record.note if record.status == "承認"
+        return "" unless record.status == "承認"
+      end
+    end
+  end
 end

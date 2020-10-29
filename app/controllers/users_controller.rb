@@ -30,6 +30,7 @@ class UsersController < ApplicationController
       flash[:success] = "ユーザー情報を更新しました。"
       redirect_to users_url
     else
+      @users = User.where.not(id: current_user.id)
       render :index
     end
   end

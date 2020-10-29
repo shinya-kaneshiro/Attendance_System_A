@@ -45,6 +45,7 @@ class AttendanceChangeController < ApplicationController
             end
             
             attendance_change.save!
+
             superior_count += 1
           else
             duplicate_count += 1
@@ -66,6 +67,7 @@ class AttendanceChangeController < ApplicationController
       end
     end
   rescue ActiveRecord::RecordInvalid
+    debugger
     flash[:danger] = "申請に失敗しました。改めて実施してください。"
     redirect_to user_url
   end

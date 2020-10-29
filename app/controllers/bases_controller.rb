@@ -14,6 +14,9 @@ class BasesController < ApplicationController
     if base.save
       flash[:success] = "拠点情報を追加しました。"
       redirect_to user_bases_url
+    else
+      flash[:danger] = "未編集(初期値)の拠点レコードが存在します。編集/削除後に追加してください。"
+      redirect_to user_bases_url
     end
   end
   

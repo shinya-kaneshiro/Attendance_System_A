@@ -142,7 +142,7 @@
         <% @total_working_times = @total_working_times.to_f + str_times.to_f %>
       <% end %>
       </td>
-      <td class="table-data"><%= day.note %></td>
+      <td class="table-data"><%= approved_remarks(day) %></td>
       <td class="table-data"><%= sheduled_end_at_hour(day) %></td>
       <td class="table-data"><%= sheduled_end_at_min(day) %></td>
       <td class="table-data">
