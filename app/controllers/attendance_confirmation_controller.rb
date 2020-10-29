@@ -28,7 +28,7 @@ class AttendanceConfirmationController < ApplicationController
   def confirmation
     confirmations = AttendanceConfirmation.where(superior_id: params[:id])
     @confirmations = confirmations.where.not(status: "承認")
-    @users = User.all
+    @users = User.all.order(id: :asc)
   end
   
   def confirmation_update

@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   before_action :admin_user, only: [:index, :edit, :import, :update, :destroy]
 
   def index
-    @users = User.where.not(id: current_user.id)
+    @users = User.where.not(id: current_user.id).order(id: :asc)
   end
   
   def show
@@ -30,7 +30,7 @@ class UsersController < ApplicationController
       flash[:success] = "ユーザー情報を更新しました。"
       redirect_to users_url
     else
-      @users = User.where.not(id: current_user.id)
+      @users = User.where.not(id: current_user.id).order(id: :asc)
       render :index
     end
   end

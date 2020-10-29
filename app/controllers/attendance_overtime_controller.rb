@@ -84,7 +84,7 @@ class AttendanceOvertimeController < ApplicationController
     # overtimes = AttendanceOvertime.where(superior_id: params[:id])
     overtimes = AttendanceOvertime.where(superior_id: params[:id])
     @overtimes = overtimes.where.not(status: "承認")
-    @users = User.all
+    @users = User.all.order(id: :asc)
   end
 
   def overtime_update

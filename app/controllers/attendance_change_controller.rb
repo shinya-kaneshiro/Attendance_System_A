@@ -119,7 +119,7 @@ class AttendanceChangeController < ApplicationController
   def change
     changes = AttendanceChange.where(superior_id: params[:id])
     @changes = changes.where.not(status: "承認")
-    @users = User.all
+    @users = User.all.order(id: :asc)
   end
   
   def change_update
