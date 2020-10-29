@@ -51,32 +51,13 @@ User.create!(name: "管理ユーザE",
             superior: false,
             admin: true)
 
+
 # 申請ステータス
 ApplicationStatus.create!(status: "なし")
 ApplicationStatus.create!(status: "申請中")
 ApplicationStatus.create!(status: "承認")
 ApplicationStatus.create!(status: "否認")
 
-# 一ヵ月分の勤怠確認申請
-# AttendanceConfirmation.create!(applicant: "1",
-#                               application_month: "2020-08-01",
-#                               status: "申請中",
-#                               superior_id: "3")
-
-# AttendanceConfirmation.create!(applicant: "1",
-#                               application_month: "2020-09-01",
-#                               status: "申請中",
-#                               superior_id: "3")
-
-# AttendanceConfirmation.create!(applicant: "2",
-#                               application_month: "2020-08-01",
-#                               status: "申請中",
-#                               superior_id: "3")
-
-# AttendanceConfirmation.create!(applicant: "2",
-#                               application_month: "2020-09-01",
-#                               status: "申請中",
-#                               superior_id: "3")
 
 # 勤怠データサンプル(一般ユーザA)
  1.times do |n|
@@ -200,7 +181,7 @@ end
  29.times do |n|
    worked_on = "2020-09-#{n+2}"
    Attendance.create!(worked_on: worked_on,
-                      started_at: "#{worked_on} 07:00:00",
+                      started_at: "#{worked_on} 09:00:00",
                       finished_at: "#{worked_on} 18:00:00",
                       user_id: 1)
 end
@@ -327,12 +308,128 @@ end
  29.times do |n|
    worked_on = "2020-09-#{n+2}"
    Attendance.create!(worked_on: worked_on,
-                      started_at: "#{worked_on} 07:00:00",
+                      started_at: "#{worked_on} 09:00:00",
                       finished_at: "#{worked_on} 18:00:00",
                       user_id: 3)
 end
 
+# 勤怠データサンプル(一般ユーザB)
+ 1.times do |n|
+   worked_on = "2020-10-#{n+1}"
+   Attendance.create!(worked_on: worked_on,
+                      started_at: "#{worked_on} 09:00:00",
+                      finished_at: "#{worked_on} 18:00:00",
+                      user_id: 2)
+end
 
+ 1.times do |n|
+   worked_on = "2020-10-#{n+2}"
+   Attendance.create!(worked_on: worked_on,
+                      started_at: "#{worked_on} 07:00:00",
+                      finished_at: "#{worked_on} 18:00:00",
+                      user_id: 2)
+end
+
+ 2.times do |n|
+   worked_on = "2020-10-#{n+3}"
+   Attendance.create!(worked_on: worked_on,
+                      started_at: nil,
+                      finished_at: nil,
+                      user_id: 2)
+end
+
+ 1.times do |n|
+   worked_on = "2020-10-#{n+5}"
+   Attendance.create!(worked_on: worked_on,
+                      started_at: "#{worked_on} 05:00:00",
+                      finished_at: "#{worked_on} 18:00:00",
+                      user_id: 2)
+end
+
+ 1.times do |n|
+   worked_on = "2020-10-#{n+6}"
+   Attendance.create!(worked_on: worked_on,
+                      started_at: "#{worked_on} 07:00:00",
+                      finished_at: "#{worked_on} 18:00:00",
+                      user_id: 2)
+end
+
+# 10/7～10/9
+ 3.times do |n|
+   worked_on = "2020-10-#{n+7}"
+   Attendance.create!(worked_on: worked_on,
+                      started_at: "#{worked_on} 09:00:00",
+                      finished_at: "#{worked_on} 18:00:00",
+                      user_id: 2)
+end
+
+ 2.times do |n|
+   worked_on = "2020-10-#{n+10}"
+   Attendance.create!(worked_on: worked_on,
+                      started_at: nil,
+                      finished_at: nil,
+                      user_id: 2)
+end
+
+# 10/12～10/16
+ 5.times do |n|
+   worked_on = "2020-10-#{n+12}"
+   Attendance.create!(worked_on: worked_on,
+                      started_at: "#{worked_on} 09:00:00",
+                      finished_at: "#{worked_on} 18:00:00",
+                      user_id: 2)
+end
+
+ 2.times do |n|
+   worked_on = "2020-10-#{n+17}"
+   Attendance.create!(worked_on: worked_on,
+                      started_at: nil,
+                      finished_at: nil,
+                      user_id: 2)
+end
+
+# 10/19～10/23
+ 5.times do |n|
+   worked_on = "2020-10-#{n+19}"
+   Attendance.create!(worked_on: worked_on,
+                      started_at: "#{worked_on} 09:00:00",
+                      finished_at: "#{worked_on} 18:00:00",
+                      user_id: 2)
+end
+
+ 2.times do |n|
+   worked_on = "2020-10-#{n+24}"
+   Attendance.create!(worked_on: worked_on,
+                      started_at: nil,
+                      finished_at: nil,
+                      user_id: 2)
+end
+
+# 10/26～10/30
+ 5.times do |n|
+   worked_on = "2020-10-#{n+26}"
+   Attendance.create!(worked_on: worked_on,
+                      started_at: nil,
+                      finished_at: nil,
+                      user_id: 2)
+end
+
+ 1.times do |n|
+   worked_on = "2020-10-#{n+31}"
+   Attendance.create!(worked_on: worked_on,
+                      started_at: nil,
+                      finished_at: nil,
+                      user_id: 2)
+end
+
+# 9/1～9/30
+ 30.times do |n|
+   worked_on = "2020-09-#{n+1}"
+   Attendance.create!(worked_on: worked_on,
+                      started_at: "#{worked_on} 09:00:00",
+                      finished_at: "#{worked_on} 18:00:00",
+                      user_id: 2)
+end
 
 # 5.times do |n|
 #   worked_on = "2020-10-#{n+5}"
@@ -365,6 +462,33 @@ end
 #   Attendance.create!(worked_on: worked_on,
 #                       user_id: 3)
 # end
+
+
+# 一ヵ月分の勤怠確認申請
+AttendanceConfirmation.create!(applicant: "1",
+                              application_month: "2020-09-01",
+                              status: "申請中",
+                              superior_id: "3")
+
+AttendanceConfirmation.create!(applicant: "2",
+                              application_month: "2020-09-01",
+                              status: "申請中",
+                              superior_id: "3")
+
+# AttendanceConfirmation.create!(applicant: "1",
+#                               application_month: "2020-09-01",
+#                               status: "申請中",
+#                               superior_id: "3")
+
+# AttendanceConfirmation.create!(applicant: "2",
+#                               application_month: "2020-08-01",
+#                               status: "申請中",
+#                               superior_id: "3")
+
+# AttendanceConfirmation.create!(applicant: "2",
+#                               application_month: "2020-09-01",
+#                               status: "申請中",
+#                               superior_id: "3")
 
 # 勤怠変更申請
 # AttendanceChange.create!(
@@ -607,18 +731,114 @@ AttendanceChange.create!(
                         superior_id: "4"
                         )
 
-# # 残業申請
-# AttendanceOvertime.create!(
-#                           applicant: "1",
-#                           worked_on: "2020-10-03",
-#                           attendance_id: 3,
-#                           scheduled_end_at: "2020-10-04 04:00:00",
-#                           next_day_flag: true,
-#                           business_content: "翌日04:00まで",
-#                           status: "申請中",
-#                           superior_id: "3",
-#                           check_box: nil
-#                           )
+# 勤怠変更申請（申請中レコード用、一般ユーザA）
+AttendanceChange.create!(
+                        applicant: "1",
+                        worked_on: "2020-10-12",
+                        attendance_id: "12",
+                        started_at: "2020-10-12 09:00:00",
+                        finished_at: "2020-10-12 18:00:00",
+                        change_started_at: "2020-10-12 07:00:00",
+                        change_finished_at: "2020-10-12 18:00:00",
+                        next_day_flag: false,
+                        note: "早出の為",
+                        status: "申請中",
+                        superior_id: "3"
+                        )
+
+AttendanceChange.create!(
+                        applicant: "1",
+                        worked_on: "2020-10-13",
+                        attendance_id: "13",
+                        started_at: "2020-10-13 09:00:00",
+                        finished_at: "2020-10-13 18:00:00",
+                        change_started_at: "2020-10-13 05:00:00",
+                        change_finished_at: "2020-10-13 18:00:00",
+                        next_day_flag: false,
+                        note: "早出の為",
+                        status: "申請中",
+                        superior_id: "3"
+                        )
+
+# 勤怠変更申請（申請中レコード用、一般ユーザB）
+AttendanceChange.create!(
+                        applicant: "2",
+                        worked_on: "2020-10-12",
+                        attendance_id: "134",
+                        started_at: "2020-10-12 09:00:00",
+                        finished_at: "2020-10-12 18:00:00",
+                        change_started_at: "2020-10-12 07:00:00",
+                        change_finished_at: "2020-10-12 18:00:00",
+                        next_day_flag: false,
+                        note: "早出の為",
+                        status: "申請中",
+                        superior_id: "3"
+                        )
+
+AttendanceChange.create!(
+                        applicant: "2",
+                        worked_on: "2020-10-13",
+                        attendance_id: "135",
+                        started_at: "2020-10-13 09:00:00",
+                        finished_at: "2020-10-13 18:00:00",
+                        change_started_at: "2020-10-13 05:00:00",
+                        change_finished_at: "2020-10-13 18:00:00",
+                        next_day_flag: false,
+                        note: "早出の為",
+                        status: "申請中",
+                        superior_id: "3"
+                        )
+
+# 残業申請(一般ユーザA)
+AttendanceOvertime.create!(
+                          applicant: "1",
+                          worked_on: "2020-10-15",
+                          attendance_id: 15,
+                          scheduled_end_at: "2020-10-15 22:00:00",
+                          next_day_flag: false,
+                          business_content: "作業フォローの為",
+                          status: "申請中",
+                          superior_id: "3",
+                          check_box: nil
+                          )
+
+AttendanceOvertime.create!(
+                          applicant: "1",
+                          worked_on: "2020-10-22",
+                          attendance_id: 22,
+                          scheduled_end_at: "2020-10-23 04:00:00",
+                          next_day_flag: true,
+                          business_content: "作業フォローの為",
+                          status: "申請中",
+                          superior_id: "3",
+                          check_box: nil
+                          )
+
+# 残業申請(一般ユーザB)
+AttendanceOvertime.create!(
+                          applicant: "2",
+                          worked_on: "2020-10-15",
+                          attendance_id: 137,
+                          scheduled_end_at: "2020-10-15 22:00:00",
+                          next_day_flag: false,
+                          business_content: "作業フォローの為",
+                          status: "申請中",
+                          superior_id: "3",
+                          check_box: nil
+                          )
+
+AttendanceOvertime.create!(
+                          applicant: "2",
+                          worked_on: "2020-10-22",
+                          attendance_id: 144,
+                          scheduled_end_at: "2020-10-23 04:00:00",
+                          next_day_flag: true,
+                          business_content: "作業フォローの為",
+                          status: "申請中",
+                          superior_id: "3",
+                          check_box: nil
+                          )
+
 
 # AttendanceOvertime.create!(
 #                           applicant: "1",
@@ -649,7 +869,7 @@ AttendanceChange.create!(
 #                           worked_on: "2020-10-13",
 #                           attendance_id: 13,
 #                           scheduled_end_at: "2020-10-14 06:45:00",
-#                           next_day_flag: false,
+#                           next_day_flag: true,
 #                           business_content: "翌日06:45まで",
 #                           status: "承認",
 #                           superior_id: "3",
